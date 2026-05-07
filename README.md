@@ -1,9 +1,9 @@
 # SeqMem-Eval
 
 An evaluation harness for **online memory / experience-evolution methods** on
-sequential reasoning, code, scientific QA, and embodied tasks. A method is a
-triple `retrieve_memory → generate → update_memory` run sample-by-sample, so
-memory evolves online within a task.
+sequential reasoning, scientific QA, code, API selection, and embodied tasks.
+A method is a triple `retrieve_memory → generate → update_memory` run
+sample-by-sample, so memory evolves online within a task.
 
 This repository contains code only. Datasets are not bundled — please obtain
 them from their original public sources (see [Data](#data)).
@@ -44,15 +44,11 @@ them under `data/` using the layout below.
 
 | Task name | Source |
 |---|---|
-| `GSM8K` | HuggingFace: `gsm8k` |
-| `MATH`, `MATH500` | HuggingFace: `hendrycks/competition_math`, `HuggingFaceH4/MATH-500` |
+| `MATH500` | HuggingFace: `HuggingFaceH4/MATH-500` |
 | `AIME2024`, `AIME2025` | HuggingFace: `Maxwell-Jia/AIME_2024`, `opencompass/AIME2025` |
-| `Omni-MATH` | HuggingFace: `KbsdJames/Omni-MATH` |
 | `MMLU-Pro-Math`, `MMLU-Pro-Physics`, `MMLU-Pro-Engineering` | HuggingFace: `TIGER-Lab/MMLU-Pro` (filtered by category) |
 | `HumanEval` | HuggingFace: `openai_humaneval` |
-| `TACO` | HuggingFace: `BAAI/TACO` |
 | `APIBench-HF`, `APIBench-TF`, `APIBench-TH` | Gorilla APIBench official release |
-| `BFCL-MultiTurnBase` | Berkeley Function Calling Leaderboard release |
 | `ALFWorld` | `alfworld` package + bundled PDDL/JSON assets |
 
 Each task file (`tasks/task_*.py`) documents the directory it expects. As a
@@ -63,10 +59,10 @@ JSON files the loader looks up.
 
 ```bash
 # Quick smoke test (5 samples)
-python main.py --method HistoryRAG --tasks AIME2024 --run-first-k 5 --timing
+python main.py --method ExpRAG --tasks AIME2024 --run-first-k 5 --timing
 
 # Multi-task sweep
-python main.py --method AllHistory --tasks GSM8K,MATH500,HumanEval
+python main.py --method ExpRAG --tasks MATH500,HumanEval
 
 # OpenAI generation backend
 python main.py --method DC-RS --tasks AIME2024 --generation-model openai/gpt-4o-mini
@@ -100,9 +96,8 @@ data on disk.
 | Name (`--method`) | Description |
 |---|---|
 | `Baseline` (`NoMemory`) | No memory — direct generation. |
-| `AllHistory` | Append every prior `(query, output)` to context. |
-| `ExpRecent` | Append the most-recent N. |
-| `HistoryRAG` (`ExpRAG`) | Retrieval-augmented memory of prior trajectories. |
+| `ExpRecent` | Append the most-recent N `(query, output)` pairs. |
+| `ExpRAG` | Retrieval-augmented memory of prior trajectories. |
 | `AWM-Online` (`AWMOnline`) | Workflow induction every Nth success. |
 | `DC-RS` (`DynamicCheatsheet_RetrievalSynthesis`) | Cheatsheet retrieval + synthesis. |
 | `ExpeL-Online-MT` / `ExpeL-Online-ST` | Experience pool + insight-rule editing (multi-try / single-try). |
@@ -110,10 +105,9 @@ data on disk.
 
 ## Tasks
 
-`GSM8K`, `MATH`, `MATH500`, `AIME2024`, `AIME2025`, `Omni-MATH`,
-`MMLU-Pro-Math`, `MMLU-Pro-Physics`, `MMLU-Pro-Engineering`, `HumanEval`,
-`TACO`, `APIBench-HF`, `APIBench-TF`, `APIBench-TH`, `BFCL-MultiTurnBase`,
-`ALFWorld`.
+`MATH500`, `AIME2024`, `AIME2025`, `MMLU-Pro-Math`, `MMLU-Pro-Physics`,
+`MMLU-Pro-Engineering`, `HumanEval`, `APIBench-HF`, `APIBench-TF`,
+`APIBench-TH`, `ALFWorld`.
 
 ## Notes
 
