@@ -1,0 +1,4 @@
+Given a list of solved API-selection traces (natural-language task -> chosen library API call), extract reusable workflows that can be applied to similar tasks.
+Each trace contains a task description and the final API call (with framework, domain, and argument choices).
+Find repeated non-overlapping sub-routines and summarize each as a workflow.
+Each workflow should have at least two actionable steps, typically: (1) infer the task's domain, (2) select the API family / entry-point, and optionally (3) fill in the required arguments (e.g. repo_or_dir, model, pretrained model name).

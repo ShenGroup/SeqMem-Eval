@@ -1,0 +1,22 @@
+name: seqmem-eval
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pip
+  - pip:
+      # Core runtime
+      - datasets
+      - pyyaml
+      - openai
+      - torch
+      - transformers
+      - sentence-transformers
+      - accelerate
+      - safetensors
+
+      # ALFWorld task runtime
+      - alfworld
+
+      # Optional: only needed when using --llm-backend vllm
+      # - vllm

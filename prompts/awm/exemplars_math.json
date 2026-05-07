@@ -1,0 +1,14 @@
+[
+  {
+    "query": "A train travels 60 miles in 1.5 hours. What is its average speed in miles per hour?",
+    "trajectory": "Step 1: Use speed = distance / time.\nStep 2: Compute 60 / 1.5 = 40.\nFinal Answer: 40"
+  },
+  {
+    "query": "A box has 24 candies. If 3 children share them equally, how many candies does each child get?",
+    "trajectory": "Step 1: Identify equal sharing operation.\nStep 2: Compute 24 / 3 = 8.\nFinal Answer: 8"
+  },
+  {
+    "query": "A store sells pencils in packs of 6. How many pencils are in 4 packs?",
+    "trajectory": "Step 1: Identify multiplication setup.\nStep 2: Compute 6 * 4 = 24.\nFinal Answer: 24"
+  }
+]

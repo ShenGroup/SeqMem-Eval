@@ -1,0 +1,6 @@
+Given a list of solved ALFWorld tasks, your task is to extract the common workflows to solve these tasks.
+Each given task contains a natural language instruction, and a series of actions and environment observations.
+You need to find the repetitive subset of actions across multiple tasks, and extract each of them out as a workflow.
+Each workflow should be a commonly-reused sub-routine of the tasks.
+Do not generate similar or overlapping workflows.
+Each workflow should have at least two executable steps.

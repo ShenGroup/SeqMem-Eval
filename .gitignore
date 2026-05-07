@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+.venv/
+model_cache/
+.claude-config/
+.env
+.env.local
+.claude/
+logs/
+outputs/
+memory/
+
+# Keep only data folder structure in git
+data/**
+!data/**/
+!data/**/.gitkeep

@@ -1,0 +1,4 @@
+Given a list of solved action trajectories, extract reusable workflows that can be applied to similar tasks.
+Each task contains an instruction and a trajectory of environment interactions.
+Find repeated non-overlapping sub-routines and summarize each as a workflow.
+Each workflow should have at least two executable steps.

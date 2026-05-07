@@ -1,0 +1,4 @@
+Given a list of solved reasoning tasks, extract reusable workflows that can be applied to similar tasks.
+Each task contains a natural-language query and a trajectory.
+Find repeated non-overlapping sub-routines and summarize each as a workflow.
+Each workflow should have at least two actionable steps.

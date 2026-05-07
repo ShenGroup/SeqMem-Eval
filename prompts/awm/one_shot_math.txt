@@ -1,0 +1,25 @@
+Task Group: Quantitative Reasoning
+## Query 1: A student buys 3 notebooks at $4 each and 2 pens at $1 each. What is the total cost?
+Trajectory:
+Step 1: Parse quantities and unit prices.
+Step 2: Compute notebook cost = 3 * 4 = 12.
+Step 3: Compute pen cost = 2 * 1 = 2.
+Step 4: Sum = 12 + 2 = 14.
+Final Answer: 14
+
+## Query 2: A tank contains 120 liters of water. 35 liters are drained, then 15 liters are added. How much water remains?
+Trajectory:
+Step 1: Start from 120.
+Step 2: Subtract drained amount: 120 - 35 = 85.
+Step 3: Add refilled amount: 85 + 15 = 100.
+Final Answer: 100
+
+Summary Workflows:
+## parse_and_formalize
+Identify variables, quantities, and target expression before calculation.
+
+## stepwise_compute_and_check
+Compute in small steps and verify arithmetic after each major operation.
+
+## finalize_in_required_format
+Return only the required final output format.

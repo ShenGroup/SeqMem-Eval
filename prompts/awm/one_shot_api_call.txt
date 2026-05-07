@@ -1,0 +1,24 @@
+Task Group: API Selection
+## Query 1: What is an API that can be used to classify sports activities in videos?
+Trajectory:
+Step 1: Identify the task's domain -> Video Classification.
+Step 2: Pick an API family whose domain matches -> torch.hub.load on a Kinetics-pretrained 3D ResNet (PyTorch Hub).
+Step 3: Fill required arguments -> repo_or_dir='facebookresearch/pytorchvideo', model='slow_r50', pretrained=True.
+Final API Call: torch.hub.load(repo_or_dir='facebookresearch/pytorchvideo', model='slow_r50', pretrained=True)
+
+## Query 2: Give me a pretrained model that can turn spoken audio into text.
+Trajectory:
+Step 1: Identify domain -> Audio Automatic Speech Recognition.
+Step 2: Pick API family -> HuggingFace AutoModelForSpeechSeq2Seq.from_pretrained (Transformers).
+Step 3: Fill arguments -> 'openai/whisper-small'.
+Final API Call: AutoModelForSpeechSeq2Seq.from_pretrained('openai/whisper-small')
+
+Summary Workflows:
+## classify_domain_then_select_api
+First map the task description to a concrete domain keyword (e.g. "Video Classification", "Audio Automatic Speech Recognition"); only then pick an API family whose domain matches.
+
+## select_api_family_by_framework
+Match the requested framework (torchhub / tensorhub / huggingface) to a canonical entry point (torch.hub.load, hub.load, AutoModel.from_pretrained, pipeline(...)) and reuse that pattern.
+
+## fill_required_args_from_pretrained_pool
+Once the API family is fixed, populate its required keyword arguments (e.g. repo_or_dir, model, model_name) from the real pretrained-model pool rather than inventing names.

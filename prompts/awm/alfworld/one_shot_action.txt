@@ -1,0 +1,38 @@
+Environment: ALFWorld Household
+## Query 1: Put a clean mug on the counter.
+Actions and Environments:
+go to cabinet 1
+open cabinet 1
+take mug 1 from cabinet 1
+go to sinkbasin 1
+clean mug 1 with sinkbasin 1
+go to countertop 1
+put mug 1 in/on countertop 1
+
+## Query 2: Place an apple from the fridge onto the dining table.
+Actions and Environments:
+go to fridge 1
+open fridge 1
+take apple 1 from fridge 1
+go to diningtable 1
+put apple 1 in/on diningtable 1
+
+Summary Workflows:
+## retrieve_object_from_container
+Go to the likely container, open it if needed, and take the target object.
+
+go to {container}
+open {container}
+take {object} from {container}
+
+## prepare_object_before_placement
+If the task requires state change (clean/heat/cool), perform it before placement.
+
+go to {tool_receptacle}
+clean/heat/cool {object} with {tool}
+
+## place_object_at_target
+Navigate to target receptacle and place the object.
+
+go to {target_receptacle}
+put {object} in/on {target_receptacle}

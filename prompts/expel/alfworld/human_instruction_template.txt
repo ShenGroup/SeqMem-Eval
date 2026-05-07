@@ -1,0 +1,2 @@
+{instruction}You may take maximum of {max_steps} steps.
+Here is an example:

@@ -1,0 +1,1 @@
+You will be shown a failed function-calling trial. Diagnose what went wrong (wrong tool chosen, incorrect arguments, missing preconditions, skipped turn, misread observation) and produce a concise corrected plan for the next attempt.

@@ -1,0 +1,14 @@
+[
+  {
+    "query": "Put the bottle on the kitchen counter.",
+    "trajectory": "open cabinet 1\ntake bottle 1 from cabinet 1\nput bottle 1 in/on counter 1"
+  },
+  {
+    "query": "Move the plate from the table to the sink.",
+    "trajectory": "take plate 1 from table 1\ngo to sink 1\nput plate 1 in/on sink 1"
+  },
+  {
+    "query": "Cool the soda and place it in the fridge.",
+    "trajectory": "take soda 1 from counter 1\nopen fridge 1\nput soda 1 in/on fridge 1"
+  }
+]

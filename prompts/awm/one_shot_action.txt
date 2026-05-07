@@ -1,0 +1,24 @@
+Environment: Household Interaction
+## Query 1: Put a clean mug on the counter.
+Actions and Environments:
+open cabinet 1
+take mug 2 from cabinet 1
+clean mug 2 with sink 1
+put mug 2 in/on counter 1
+
+## Query 2: Place an apple from the fridge onto the dining table.
+Actions and Environments:
+open fridge 1
+take apple 1 from fridge 1
+go to dining room 1
+put apple 1 in/on dining table 1
+
+Summary Workflows:
+## retrieve_object_from_container
+Open the relevant container and take the target object.
+
+## clean_or_prepare_before_placement
+If the task requires a clean or prepared state, do that before the final placement.
+
+## place_object_at_target
+Navigate to the destination and place the object on/in the target receptacle.

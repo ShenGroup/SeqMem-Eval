@@ -1,0 +1,2 @@
+The following are experience rules accumulated from prior function-calling tasks. Use them as reference when choosing which function to call and what arguments to pass:
+{rules}
