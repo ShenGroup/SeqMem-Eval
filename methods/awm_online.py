@@ -89,17 +89,12 @@ class AwmOnline(BaseMethod):
         low = str(task_name or "").lower()
         if "alfworld" in low:
             return "action"
-        if "bfcl" in low:
-            return "tool_call"
         if "apibench" in low:
             return "api_call"
         return "math"
 
     def _is_alfworld_task(self, task_name):
         return "alfworld" in str(task_name or "").lower()
-
-    def _is_bfcl_task(self, task_name):
-        return "bfcl" in str(task_name or "").lower()
 
     def _supports_interactive_task(self, task):
         return all(hasattr(task, name) for name in ("start_episode", "step_episode", "finish_episode"))
@@ -203,8 +198,6 @@ class AwmOnline(BaseMethod):
     def _get_profile_prompts(self, profile, task_name=None):
         if self._is_alfworld_task(task_name):
             variant = "alfworld"
-        elif self._is_bfcl_task(task_name):
-            variant = "bfcl"
         else:
             variant = "default"
         cache_key = f"{profile}:{variant}"
@@ -464,70 +457,6 @@ class AwmOnline(BaseMethod):
         )
         return self._truncate_text("\n".join(lines).strip(), self.history_char_limit * 3)
 
-    def _bfcl_step_instruction(self):
-        return (
-            "You are solving a BFCL multi-turn function-calling task. The task system prompt below "
-            "defines the required response format and the full list of callable functions — follow it "
-            "literally. Emit one batch of function calls per response in that format. When you have no "
-            "further calls for the current turn, emit an empty response so the system can advance to "
-            "the next user turn."
-        )
-
-    def _build_bfcl_step_prompt(
-        self,
-        task_prompt,
-        current_observation,
-        step_rows,
-        workflows,
-        exemplars,
-        manual_fewshots,
-        step_idx,
-        max_steps,
-        initial_observation=None,
-    ):
-        del initial_observation  # unused — BFCL has no room layout
-        recent = step_rows
-        history_lines = []
-        for row in recent:
-            action = str(row.get("action", "")).strip()
-            obs = str(row.get("observation", "")).strip()
-            if action:
-                history_lines.append(f"[assistant] {action}")
-            if obs:
-                history_lines.append(f"[system] {obs}")
-        history_block = "\n".join(history_lines).strip() if history_lines else "(none)"
-        fewshot_text = "\n\n".join(str(x).strip() for x in manual_fewshots if str(x).strip())
-
-        lines = [
-            self._bfcl_step_instruction(),
-            "",
-            "## Retrieved Workflows",
-            self._format_workflow_block(workflows),
-            "",
-            "## Concrete Exemplars",
-            self._format_exemplar_block(exemplars),
-        ]
-        if fewshot_text:
-            lines.extend(["", "## Few-shot Examples", fewshot_text])
-        lines.extend(
-            [
-                "",
-                "## Task System Prompt",
-                str(task_prompt).strip(),
-                "",
-                f"## Current Step ({step_idx}/{max_steps})",
-                "Current observation (user turn or prior tool results):",
-                str(current_observation or "").strip(),
-                "",
-                "Recent trajectory:",
-                history_block,
-                "",
-                "Emit the next batch of function calls for this turn in the required format, or an "
-                "empty response to advance to the next turn. Do not output explanations.",
-            ]
-        )
-        return self._truncate_text("\n".join(lines).strip(), self.history_char_limit * 3)
-
     def _build_trial_model_output(self, step_rows, success):
         lines = []
         for row in step_rows:
@@ -748,8 +677,6 @@ class AwmOnline(BaseMethod):
         task_name = task.name
         if self._is_alfworld_task(task_name):
             step_prompt_builder = self._build_alfworld_step_prompt
-        elif self._is_bfcl_task(task_name):
-            step_prompt_builder = self._build_bfcl_step_prompt
         else:
             return None
 

@@ -1,1 +1,0 @@
-The blocks below provide (1) any prior-attempt memory (may be empty) and (2) the current task specification, available functions, conversation turns, and prior tool outputs. You may invoke up to {max_steps} function-call steps across all turns.

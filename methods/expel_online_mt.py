@@ -25,7 +25,6 @@ class ExpelOnlineMT(BaseMethod):
     _PROMPT_ROOT_BASE = Path(__file__).resolve().parents[1] / "prompts" / "expel"
     _PROMPT_DIR_BY_TASK = {
         "ALFWorld": "alfworld",
-        "BFCL-MultiTurnBase": "bfcl",
     }
     _DEFAULT_PROMPT_DIR = "alfworld"
 
@@ -149,7 +148,7 @@ class ExpelOnlineMT(BaseMethod):
         text = str(output or "").strip()
         if not text:
             return ""
-        # Delegate to the task when it exposes a custom parser (BFCL, future tasks).
+        # Delegate to the task when it exposes a custom parser, if available.
         if task is not None and hasattr(task, "_extract_actions"):
             try:
                 actions = list(task._extract_actions(text))

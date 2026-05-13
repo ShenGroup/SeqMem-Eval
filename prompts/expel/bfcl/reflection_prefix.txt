@@ -1,2 +1,0 @@
-STATUS: FAIL
-Analysis of the previous trial and a corrected plan for the next attempt:

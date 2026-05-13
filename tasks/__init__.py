@@ -22,32 +22,11 @@ except ImportError:
     AIME2025Task = None
 
 try:
-    from tasks.task_gsm8k import GSM8KTask
-
-    TASK_REGISTRY[GSM8KTask.name] = GSM8KTask
-except ImportError:
-    GSM8KTask = None
-
-try:
-    from tasks.task_math import MATHTask
-
-    TASK_REGISTRY[MATHTask.name] = MATHTask
-except ImportError:
-    MATHTask = None
-
-try:
     from tasks.task_math500 import MATH500Task
 
     TASK_REGISTRY[MATH500Task.name] = MATH500Task
 except ImportError:
     MATH500Task = None
-
-try:
-    from tasks.task_omni_math import OmniMATHTask
-
-    TASK_REGISTRY[OmniMATHTask.name] = OmniMATHTask
-except ImportError:
-    OmniMATHTask = None
 
 try:
     from tasks.task_mmlu_pro_math import MMLUProMathTask
@@ -77,25 +56,11 @@ except ImportError:
     MMLUProEngineeringTask = None
 
 try:
-    from tasks.task_taco import TACOTask
-
-    TASK_REGISTRY[TACOTask.name] = TACOTask
-except ImportError:
-    TACOTask = None
-
-try:
     from tasks.task_humaneval import HumanEvalTask
 
     TASK_REGISTRY[HumanEvalTask.name] = HumanEvalTask
 except ImportError:
     HumanEvalTask = None
-
-try:
-    from tasks.task_bfcl import BFCLMultiTurnBaseTask
-
-    TASK_REGISTRY[BFCLMultiTurnBaseTask.name] = BFCLMultiTurnBaseTask
-except ImportError:
-    BFCLMultiTurnBaseTask = None
 
 try:
     from tasks.task_apibench import APIBenchHF
@@ -122,16 +87,11 @@ __all__ = [
     "ALFWorldTask",
     "AIME2024Task",
     "AIME2025Task",
-    "GSM8KTask",
-    "MATHTask",
     "MATH500Task",
-    "OmniMATHTask",
     "MMLUProMathTask",
     "MMLUProPhysicsTask",
     "MMLUProEngineeringTask",
-    "TACOTask",
     "HumanEvalTask",
-    "BFCLMultiTurnBaseTask",
     "APIBenchHF",
     "APIBenchTF",
     "APIBenchTH",

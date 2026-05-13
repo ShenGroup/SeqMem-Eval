@@ -53,8 +53,7 @@ def evaluate(
 ) -> Dict[str, Any]:
     """Run `check(entry_point)` against `user_code + test_src`.
 
-    Returns a dict with the same shape used by the TACO evaluator so
-    downstream code paths stay uniform:
+    Returns a dict with this shape:
         passed (int, 0 or 1), total (int, 1),
         pass_rate (float), all_pass (bool),
         first_error (str), stderr_tail (str), mode ("call_based").

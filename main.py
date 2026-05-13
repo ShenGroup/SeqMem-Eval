@@ -245,32 +245,6 @@ def parse_args():
              "'id' = eval_in_distribution (valid_seen).",
     )
     parser.add_argument(
-        "--taco-max-tests",
-        type=int,
-        default=15,
-        help=(
-            "TACO task: max test cases executed per problem (0 → no cap). "
-            "The official test split has ~202 cases per problem; capping keeps "
-            "wall-clock manageable. score=1.0 requires passing all selected cases."
-        ),
-    )
-    parser.add_argument(
-        "--taco-per-timeout",
-        type=int,
-        default=6,
-        help="TACO task: wall-clock timeout in seconds per individual test case.",
-    )
-    parser.add_argument(
-        "--taco-difficulties",
-        type=str,
-        default=None,
-        help=(
-            "TACO task: comma-separated difficulty filter "
-            "(EASY, MEDIUM, MEDIUM_HARD, HARD, VERY_HARD). "
-            "Default: keep all difficulties."
-        ),
-    )
-    parser.add_argument(
         "--humaneval-timeout",
         type=int,
         default=10,
@@ -278,31 +252,6 @@ def parse_args():
             "HumanEval task: wall-clock timeout in seconds per problem "
             "(subprocess runs `check(entry_point)` once; default 10 s)."
         ),
-    )
-    parser.add_argument(
-        "--bfcl-max-steps-per-turn",
-        type=int,
-        default=20,
-        help=(
-            "BFCL-MultiTurnBase: max model-generated steps per user turn "
-            "before the episode force-advances to the next turn. Matches "
-            "BFCL upstream's MAXIMUM_STEP_LIMIT=20 by default."
-        ),
-    )
-    parser.add_argument(
-        "--bfcl-max-steps",
-        type=int,
-        default=80,
-        help=(
-            "BFCL-MultiTurnBase: hard cap on total steps per episode across "
-            "all turns."
-        ),
-    )
-    parser.add_argument(
-        "--bfcl-debug-eval",
-        action="store_true",
-        default=False,
-        help="Dump per-sample BFCL backend state snapshots + exec errors into memory records.",
     )
     parser.add_argument("--output-dir", type=str, default=str(DEFAULT_OUTPUT_DIR))
     parser.add_argument(
@@ -486,11 +435,6 @@ def main():
         per_task_kwargs=per_task_kwargs,
         prompt_file=args.prompt_file,
     )
-    taco_difficulties = None
-    if args.taco_difficulties:
-        taco_difficulties = [
-            d.strip().upper() for d in args.taco_difficulties.split(",") if d.strip()
-        ]
     for task in tasks:
         if hasattr(task, "alfworld_fewshot_num"):
             task.alfworld_fewshot_num = max(0, int(args.alfworld_fewshot_num))
@@ -509,21 +453,8 @@ def main():
             and hasattr(task, "max_steps")
         ):
             task.max_steps = max(1, int(args.expel_max_steps))
-        if hasattr(task, "taco_max_tests"):
-            task.taco_max_tests = max(0, int(args.taco_max_tests))
-        if hasattr(task, "taco_per_timeout"):
-            task.taco_per_timeout = max(1, int(args.taco_per_timeout))
-        if hasattr(task, "taco_difficulties"):
-            task.taco_difficulties = taco_difficulties
         if hasattr(task, "humaneval_timeout"):
             task.humaneval_timeout = max(2, int(args.humaneval_timeout))
-        if hasattr(task, "max_steps_per_turn"):
-            task.max_steps_per_turn = max(1, int(args.bfcl_max_steps_per_turn))
-        if getattr(task, "name", "") == "BFCL-MultiTurnBase":
-            if hasattr(task, "max_steps"):
-                task.max_steps = max(task.max_steps_per_turn, int(args.bfcl_max_steps))
-            if hasattr(task, "debug_eval"):
-                task.debug_eval = bool(args.bfcl_debug_eval)
     timer = Timer(enabled=args.timing)
 
     runner = Runner(
